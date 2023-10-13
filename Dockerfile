@@ -1,7 +1,7 @@
-FROM python:3.9.12-slim AS builder
+FROM python:3.9.18-alpine AS builder
 
-RUN apt-get update && \
-    apt-get install -y libpq-dev gcc
+RUN apk update && \
+    apk add musl-dev libpq-dev gcc
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -9,11 +9,10 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-FROM python:3.9.12-slim
+FROM python:3.9.18-alpine
 
-RUN apt-get update && \
-    apt-get install -y libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk add libpq-dev
 
 COPY --from=builder /opt/venv /opt/venv
 
