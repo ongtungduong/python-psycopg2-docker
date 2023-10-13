@@ -15,7 +15,7 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v6
         name: Build and push Docker image
         with:
-          image: ${{ github.actor }}/${{ github.repository }}
+          image: ${{ github.repository }}
           registry: docker.io
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PASSWORD }}
